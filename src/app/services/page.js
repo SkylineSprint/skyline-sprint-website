@@ -1,6 +1,6 @@
 import PioneeringExcellenceSection from '../../components/Inception'
 import DevelopmentSteps from '../../components/DevelopmentSteps'
-
+import AIAutomationSection from '../../components/Portfolio'
 
 export default function OurServices() {
   return (
@@ -17,7 +17,7 @@ export default function OurServices() {
   ratingText="200+ Agencies Rated"
 />
 <DevelopmentSteps/>
-
+<AIAutomationSection/>
     
 </div>
   )}

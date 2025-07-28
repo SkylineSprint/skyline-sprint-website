@@ -11,8 +11,9 @@ export default function HomePage() {
       <HeroSlider />
       <GlassVideoHero />
       <ServicesSection />
+      <ChooseSection/>
       <TestimonialSection />
-
+    
     </div>
   );
 }

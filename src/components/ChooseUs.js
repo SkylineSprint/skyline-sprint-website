@@ -1,17 +1,47 @@
-'use client';
-import React, { useState, useEffect } from 'react';
+'use client'
+import React,{ useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Check } from 'lucide-react';
 import Image from 'next/image';
 
-const ChooseSection = ({
-  title = 'Why Choose Skyline Sprint',
-  sliderImages = [],
-  keyPoints = [],
-  clientLogos = [],
-  highlightLabel = '5-Key Points',
-  buttonText = 'Skyline Sprint'
-}) => {
+const ChooseSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Sample images for the slider
+  const sliderImages = [
+   "/images/SLIDER-1.jpg",
+   "/images/SLIDER-2.jpg",
+   "/images/SLIDER-3.png",
+  ];
+
+  // Key points data
+  const keyPoints = [
+    {
+      title: "Expert Team:",
+      description: "Industry professionals with proven track records"
+    },
+    {
+      title: "Full-Stack Solutions:",
+      description: "End-to-end services from concept to deployment"
+    },
+    {
+      title: "Results-Driven:",
+      description: "Measurable outcomes that drive business growth"
+    },
+    {
+      title: "Continuous Support:",
+      description: "Ongoing maintenance and optimization"
+    }
+  ];
+
+  // Client logos data
+  const clientLogos = [
+    { name: "Company 1", logo: "https://via.placeholder.com/120x60/666/fff?text=LOGO1" },
+    { name: "Ipsum", logo: "https://via.placeholder.com/120x60/666/fff?text=IPSUM" },
+    { name: "Company 3", logo: "https://via.placeholder.com/120x60/666/fff?text=LOGO3" },
+    { name: "Company 4", logo: "https://via.placeholder.com/120x60/666/fff?text=LOGO4" },
+    { name: "Company 5", logo: "https://via.placeholder.com/120x60/666/fff?text=LOGO5" },
+    { name: "Company 6", logo: "https://via.placeholder.com/120x60/666/fff?text=LOGO6" }
+  ];
 
   // Auto-advance slider
   useEffect(() => {
@@ -34,8 +64,8 @@ const ChooseSection = ({
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-16">
-          <h1 className="text-4xl md:text-5xl lg:text-5xl ">
-            {title}
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold">
+            Why Choose Skyline Sprint 
           </h1>
         </div>
 
@@ -60,9 +90,9 @@ const ChooseSection = ({
                 <button
                   className="group relative px-6 py-3 text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105 overflow-hidden border border-white/10"
                   style={{ 
-                    background: 'linear-gradient(180deg, #1E0D1C 0%, #0C0912 100%)',
-                    boxShadow: '0 10px 5px -1px rgba(177, 30, 155, 0.15)'
-                  }}
+                background: 'linear-gradient(180deg, #1E0D1C 0%, #0C0912 100%)',
+                boxShadow: '0 10px 5px -1px rgba(177, 30, 155, 0.15)'
+              }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.boxShadow = '0 10px 25px -5px rgba(177, 30, 155, 0.3)';
                   }}
@@ -70,12 +100,13 @@ const ChooseSection = ({
                     e.currentTarget.style.boxShadow = '0 10px 5px -1px rgba(177, 30, 155, 0.15)';
                   }}
                 >
+                  {/* Glossy overlay */}
                   <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" ></div>
-                  <span className="relative z-10" >{buttonText}</span>
+                  <span className="relative z-10" >Skyline Sprint</span>
                 </button>
 
                 <div className="text-lg font-semibold text-gray-300 transition-colors duration-300 group-hover:text-gray-200">
-                  {highlightLabel}
+                  5-Key Points
                 </div>
               </div>
 
@@ -127,6 +158,8 @@ const ChooseSection = ({
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                 </div>
               ))}
+
+              {/* Slide Indicators */}
               <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
                 {sliderImages.map((_, index) => (
                   <button
@@ -150,9 +183,23 @@ const ChooseSection = ({
         {/* Client Logos Slider */}
         <div className="relative overflow-hidden">
           <div className="flex animate-scroll">
-            {clientLogos.concat(clientLogos).map((client, index) => (
+            {/* First set of logos */}
+            {clientLogos.map((client, index) => (
               <div
-                key={`logo-${index}`}
+                key={`first-${index}`}
+                className="flex-shrink-0 mx-8 opacity-60 hover:opacity-100 transition-opacity duration-300"
+              >
+                <img
+                  src={client.logo}
+                  alt={client.name}
+                  className="h-12 w-auto filter grayscale hover:grayscale-0 transition-all duration-300"
+                />
+              </div>
+            ))}
+            {/* Duplicate set for seamless loop */}
+            {clientLogos.map((client, index) => (
+              <div
+                key={`second-${index}`}
                 className="flex-shrink-0 mx-8 opacity-60 hover:opacity-100 transition-opacity duration-300"
               >
                 <img
@@ -175,9 +222,11 @@ const ChooseSection = ({
             transform: translateX(-50%);
           }
         }
+        
         .animate-scroll {
           animation: scroll 30s linear infinite;
         }
+        
         .animate-scroll:hover {
           animation-play-state: paused;
         }
