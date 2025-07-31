@@ -1,6 +1,6 @@
 'use client'
 import React from 'react';
-
+import Image from 'next/image';
 const OurMission = () => {
   return (
     <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#080808' }}>
@@ -61,6 +61,8 @@ const OurMission = () => {
                   src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80"
                   alt="Team collaboration and innovation"
                   className="w-full h-96 lg:h-[500px] object-cover"
+                  height={500}
+                  width={800}
                 />
               </div>
               

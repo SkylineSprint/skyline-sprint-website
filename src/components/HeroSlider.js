@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { motion, useScroll, useTransform } from 'framer-motion';
+
 
 const HeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -30,15 +30,7 @@ const HeroSection = () => {
     return () => clearInterval(timer);
   }, []);
 
-  // Parallax scroll effect
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  
 
   return (
     <div className="relative min-h-[70vh] sm:h-[70vh] overflow-hidden bg-black  ">
@@ -77,7 +69,10 @@ const HeroSection = () => {
               
               {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
-                <button className="w-full sm:w-auto bg-[#B11E9B] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-sm sm:text-base font-semibold transition-all duration-200 transform hover:scale-105">
+                <button className="w-full sm:w-auto  text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-sm sm:text-base font-semibold transition-all duration-200 transform hover:scale-105 " 
+                style={{
+                    background: 'linear-gradient(180deg, #B11E9B 0%, #7D146D 100%)'
+                  }}>
                   Get Started
                 </button>
                 <button className="w-full sm:w-auto bg-transparent border border-gray-600 hover:border-purple-500 text-gray-300 hover:text-purple-400 px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-sm sm:text-base font-semibold transition-all duration-200">

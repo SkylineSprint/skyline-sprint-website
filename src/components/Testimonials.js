@@ -92,7 +92,7 @@ const TestimonialSection = () => {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex justify-between items-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold">Client Testimonials</h2>
+          <h2 className="text-4xl md:text-5xl ">Client Testimonials</h2>
           <div className="flex items-center gap-4">
            
            
@@ -193,7 +193,7 @@ const TestimonialSection = () => {
               }`}
             />
           ))}
-        </div>
+        </div>  
       </div>
     </div>
   );

@@ -1,54 +1,45 @@
-import React from "react";
-import { ArrowUpRight, Monitor, Megaphone, Code } from "lucide-react";
-import Image from "next/image";
+import React from 'react';
+import { ArrowUpRight, Monitor, Megaphone, Code } from 'lucide-react';
+import Image from 'next/image';
+import * as motion from "motion/react-client"
+
 const ServicesOverview = () => {
   const services = [
     {
       id: 1,
       icon: <Code className="w-8 h-8" />,
       title: "Custom Software Development",
-      description:
-        "Build powerful, scalable applications tailored to your business needs",
-      highlights:
-        "Key highlights: AI automation, web & mobile apps, CRM/ERP systems",
+      description: "Build powerful, scalable applications tailored to your business needs",
+      highlights: "Key highlights: AI automation, web & mobile apps, CRM/ERP systems",
       featured: false,
-      image: "/images/laptop.png",
+      image: "/images/laptop.png" 
     },
     {
       id: 2,
       icon: <Megaphone className="w-8 h-8" />,
       title: "Digital Marketing Excellence",
-      description:
-        "Boost your online presence with data-driven marketing strategies",
-      highlights:
-        "Key highlights: Meta ads, SEO, content creation, e-commerce solutions",
+      description: "Boost your online presence with data-driven marketing strategies",
+      highlights: "Key highlights: Meta ads, SEO, content creation, e-commerce solutions",
       featured: true,
-      image: "/images/voice.png",
+      image: "/images/voice.png"
     },
     {
       id: 3,
       icon: <Monitor className="w-8 h-8" />,
       title: "Professional Training Institute",
-      description:
-        "Master the latest technologies with industry-expert instruction",
-      highlights:
-        "Key highlights: Hands-on learning, career advancement, certification programs",
+      description: "Master the latest technologies with industry-expert instruction",
+      highlights: "Key highlights: Hands-on learning, career advancement, certification programs",
       featured: false,
-      image: "/images/layers.png",
-    },
+      image: "/images/layers.png"
+    }
   ];
 
   return (
-    <div
-      className="min-h-screen p-8 relative"
-      style={{ backgroundColor: "#080808" }}
-    >
+    <div className="min-h-screen p-8 relative" style={{ backgroundColor: '#080808' }}>
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-16">
-          <h1 className="text-5xl font-bold text-white mb-4">
-            Services Overview
-          </h1>
+          <h1 className="text-5xl font-bold text-white mb-4">Services Overview</h1>
           <div className="text-gray-400 text-lg">
             <div>Comprehensive Digital Solutions</div>
             <div>Under One Roof</div>
@@ -57,16 +48,18 @@ const ServicesOverview = () => {
 
         {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-32">
-          {services.map((service) => (
+          {services.map((service, index) => (
             <div
               key={service.id}
               className={`relative rounded-2xl p-8 transition-all duration-300 hover:scale-105 cursor-pointer group ${
-                service.featured ? "border-2" : "border"
+                service.featured 
+                  ? 'border-2' 
+                  : 'border'
               }`}
               style={{
-                borderColor: "#B11E9B",
-                backgroundColor: "#0a0a0a",
-                boxShadow: "0 10px 5px -1px rgba(177, 30, 155, 0.15)",
+                borderColor: '#B11E9B',
+                backgroundColor: '#0a0a0a',
+                boxShadow: '0 10px 5px -1px rgba(177, 30, 155, 0.15)'
               }}
             >
               {/* Arrow Icon */}
@@ -74,24 +67,32 @@ const ServicesOverview = () => {
                 <ArrowUpRight className="w-6 h-6 text-gray-400" />
               </div>
 
-              {/* Service Icon */}
-              <div
+              <motion.div 
                 className="inline-flex p-4 rounded-xl mb-6"
-                style={{ backgroundColor: "#B11E9B", color: "#fff" }}
+                style={{ backgroundColor: '#B11E9B', color: '#fff' }}
+                whileHover={{ rotate: 360 }}
+                whileInView={{ rotate: 360 }}
+                initial={{ rotate: 0 }}
+                viewport={{ once: false, amount: 0.3 }}
+                transition={{ 
+                  duration: 1,
+                  delay: index * 0.2, // Stagger animation for each card
+                  ease: "easeInOut"
+                }}
               >
                 {service.icon}
-              </div>
+              </motion.div>
 
               {/* Content */}
               <div className="space-y-4">
                 <h3 className="text-2xl font-bold text-white leading-tight">
                   {service.title}
                 </h3>
-
+                
                 <p className="text-gray-300 text-base leading-relaxed">
                   {service.description}
                 </p>
-
+                
                 <p className="text-gray-400 text-sm leading-relaxed">
                   {service.highlights}
                 </p>
@@ -100,8 +101,8 @@ const ServicesOverview = () => {
               {/* Image Placeholder */}
               <div className="mt-8">
                 <Image
-                  src={service.image}
-                  alt={service.title}
+                  src={service.image} 
+                  alt={service.title} 
                   width={300}
                   height={100}
                   className="w-full h-48 object-cover rounded-xl border border-[#1a1a1a]"
@@ -113,11 +114,11 @@ const ServicesOverview = () => {
 
         {/* Simple mouse icon */}
         <div className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 z-20">
-          <svg
-            width="20"
+          <svg 
+            width="20" 
             height="28"
-            viewBox="0 0 33 47"
-            fill="white"
+            viewBox="0 0 33 47" 
+            fill="white" 
             xmlns="http://www.w3.org/2000/svg"
             className="md:w-[33px] md:h-[47px] w-5 h-7"
           >
@@ -127,81 +128,51 @@ const ServicesOverview = () => {
 
         {/* Glossy bottom curved stroke with shadow */}
         <div className="absolute bottom-0 left-0 right-0 h-16">
-          <svg
-            className="absolute bottom-0 w-full h-16"
-            viewBox="0 0 1200 64"
+          <svg 
+            className="absolute bottom-0 w-full h-16" 
+            viewBox="0 0 1200 64" 
             preserveAspectRatio="none"
           >
             <defs>
-              <linearGradient
-                id="bottomBorderGradient"
-                x1="0%"
-                y1="0%"
-                x2="100%"
-                y2="0%"
-              >
-                <stop
-                  offset="0%"
-                  style={{ stopColor: "#B11E9B", stopOpacity: 0.05 }}
-                />
-                <stop
-                  offset="50%"
-                  style={{ stopColor: "#B11E9B", stopOpacity: 0.15 }}
-                />
-                <stop
-                  offset="100%"
-                  style={{ stopColor: "#B11E9B", stopOpacity: 0.05 }}
-                />
+              <linearGradient id="bottomBorderGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style={{ stopColor: '#B11E9B', stopOpacity: 0.05 }} />
+                <stop offset="50%" style={{ stopColor: '#B11E9B', stopOpacity: 0.15 }} />
+                <stop offset="100%" style={{ stopColor: '#B11E9B', stopOpacity: 0.05 }} />
               </linearGradient>
-
-              <linearGradient
-                id="shadowGradient"
-                x1="0%"
-                y1="100%"
-                x2="0%"
-                y2="0%"
-              >
-                <stop
-                  offset="0%"
-                  style={{ stopColor: "#B11E9B", stopOpacity: 0.15 }}
-                />
-                <stop
-                  offset="30%"
-                  style={{ stopColor: "#B11E9B", stopOpacity: 0.08 }}
-                />
-                <stop
-                  offset="100%"
-                  style={{ stopColor: "#B11E9B", stopOpacity: 0 }}
-                />
+              
+              <linearGradient id="shadowGradient" x1="0%" y1="100%" x2="0%" y2="0%">
+                <stop offset="0%" style={{ stopColor: '#B11E9B', stopOpacity: 0.15 }} />
+                <stop offset="30%" style={{ stopColor: '#B11E9B', stopOpacity: 0.08 }} />
+                <stop offset="100%" style={{ stopColor: '#B11E9B', stopOpacity: 0 }} />
               </linearGradient>
-
+              
               <filter id="bottomGlow">
-                <feGaussianBlur stdDeviation="2.5" result="coloredBlur" />
-                <feMerge>
-                  <feMergeNode in="coloredBlur" />
-                  <feMergeNode in="SourceGraphic" />
+                <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+                <feMerge> 
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/>
                 </feMerge>
               </filter>
             </defs>
-
+            
             {/* Dispersed shadow extending upwards with curved ends */}
-            <path
+            <path 
               d="M0,64 Q0,20 100,20 L1100,20 Q1200,20 1200,64 L1200,64 L0,64 Z"
               fill="url(#shadowGradient)"
               filter="url(#bottomGlow)"
               transform="translate(0, 10)"
             />
-
+            
             {/* Main bright line at bottom with curved ends */}
-            <path
+            <path 
               d="M0,64 Q0,60 100,60 L1100,60 Q1200,60 1200,64"
               fill="none"
               stroke="url(#bottomBorderGradient)"
               strokeWidth="2"
               transform="translate(0, 10)"
-              style={{
-                filter: "drop-shadow(0 10px 5px rgba(177, 30, 155, 0.15))",
-                strokeDasharray: "none",
+              style={{ 
+                filter: 'drop-shadow(0 10px 5px rgba(177, 30, 155, 0.15))',
+                strokeDasharray: 'none'
               }}
             />
           </svg>

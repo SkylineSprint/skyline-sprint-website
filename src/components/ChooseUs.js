@@ -54,7 +54,7 @@ const ChooseSection = () => {
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % sliderImages.length);
   };
-
+  
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev - 1 + sliderImages.length) % sliderImages.length);
   };
@@ -64,7 +64,7 @@ const ChooseSection = () => {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-16">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold">
+          <h1 className="text-4xl md:text-5xl lg:text-5xl ">
             Why Choose Skyline Sprint 
           </h1>
         </div>
@@ -101,7 +101,13 @@ const ChooseSection = () => {
                   }}
                 >
                   {/* Glossy overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" ></div>
+                   <div
+                  className="absolute inset-0"
+                  style={{
+                    background: 'radial-gradient(43% 50% at 50% 50%, rgba(15, 9, 18, 0.15) 0%, #0C0912 100%)'
+                  }}
+                ></div>
+
                   <span className="relative z-10" >Skyline Sprint</span>
                 </button>
 
