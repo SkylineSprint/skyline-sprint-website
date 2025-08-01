@@ -36,9 +36,38 @@ const OurCoreTeam = () => {
   ];
 
   return (
-    <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#080808' }}>
+        <div className="relative min-h-screen flex items-center justify-center bg-black">
+  {/* Background Image */}
+      <div 
+        className="absolute inset-0"
+        style={{
+          backgroundImage: "url('/images/background.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          opacity: 0.3, // Controls image opacity
+          zIndex: 0
+        }}
+  ></div>
+  
       <div className="max-w-6xl mx-auto px-4 py-16">
         <div className="text-center mb-16">
+            <button 
+            className="relative px-6 py-2 text-white text-sm font-medium rounded-md transition-all duration-200 hover:scale-105 active:scale-95 mb-8 "
+            style={{
+              background: 'rgba(177, 30, 155, 0.2)',
+              boxShadow: `
+                inset 0px 10px 5px -1px rgba(255, 255, 255, 0.08),
+                0px 6px 18px -1.5px rgba(177, 30, 155, 0.18),
+                0px 1.37px 4.12px -1px rgba(177, 30, 155, 0.1),
+                0px 0.36px 1.08px -0.5px rgba(177, 30, 155, 0.08)
+              `,
+              backdropFilter: 'blur(10px)',
+              border: '1px solid rgba(177, 30, 155, 0.3)'
+            }}
+          >
+            Skyline Sprint 
+          </button>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Our Core Team</h2>
         </div>
         

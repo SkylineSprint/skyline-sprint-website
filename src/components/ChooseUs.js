@@ -35,12 +35,15 @@ const ChooseSection = () => {
 
   // Client logos data
   const clientLogos = [
-    { name: "Company 1", logo: "https://via.placeholder.com/120x60/666/fff?text=LOGO1" },
-    { name: "Ipsum", logo: "https://via.placeholder.com/120x60/666/fff?text=IPSUM" },
-    { name: "Company 3", logo: "https://via.placeholder.com/120x60/666/fff?text=LOGO3" },
-    { name: "Company 4", logo: "https://via.placeholder.com/120x60/666/fff?text=LOGO4" },
-    { name: "Company 5", logo: "https://via.placeholder.com/120x60/666/fff?text=LOGO5" },
-    { name: "Company 6", logo: "https://via.placeholder.com/120x60/666/fff?text=LOGO6" }
+    { name: "Company 1", logo: "/images/company-1.png" },
+    { name: "Ipsum", logo: "/images/company-2.png" },
+    { name: "Company 3", logo: "/images/company-3.png" },
+    { name: "Company 4", logo: "/images/company-2.png" },
+    { name: "Company 5", logo: "/images/company-1.png" },
+    { name: "Company 6", logo: "/images/company-3.png" },
+    { name: "Company 4", logo: "/images/company-2.png" },
+    { name: "Company 5", logo: "/images/company-1.png" },
+    { name: "Company 6", logo: "/images/company-3.png" }
   ];
 
   // Auto-advance slider
@@ -54,17 +57,44 @@ const ChooseSection = () => {
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % sliderImages.length);
   };
-
+  
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev - 1 + sliderImages.length) % sliderImages.length);
   };
 
   return (
-    <div style={{ backgroundColor: '#080808' }} className="text-white min-h-screen py-16 px-4">
+      <div 
+         className="text-white min-h-screen py-16 px-4" 
+          style={{ 
+            backgroundImage: "url('/images/background.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            
+            }}
+>
       <div className="max-w-7xl mx-auto">
+
+          <button 
+            className="relative px-6 py-2 not-even:mb-8 text-white text-sm font-medium rounded-md transition-all duration-200 hover:scale-105 active:scale-95"
+            style={{
+              background: 'rgba(177, 30, 155, 0.2)',
+              boxShadow: `
+                inset 0px 10px 5px -1px rgba(255, 255, 255, 0.08),
+                0px 6px 18px -1.5px rgba(177, 30, 155, 0.18),
+                0px 1.37px 4.12px -1px rgba(177, 30, 155, 0.1),
+                0px 0.36px 1.08px -0.5px rgba(177, 30, 155, 0.08)
+              `,
+              backdropFilter: 'blur(10px)',
+              border: '1px solid rgba(177, 30, 155, 0.3)'
+            }}
+          >
+            Skyline Sprint 
+          </button>
+
         {/* Header */}
         <div className="flex items-center justify-between mb-16">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold">
+          <h1 className="text-4xl md:text-5xl lg:text-5xl ">
             Why Choose Skyline Sprint 
           </h1>
         </div>
@@ -101,7 +131,13 @@ const ChooseSection = () => {
                   }}
                 >
                   {/* Glossy overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" ></div>
+                   <div
+                  className="absolute inset-0"
+                  style={{
+                    background: 'radial-gradient(43% 50% at 50% 50%, rgba(15, 9, 18, 0.15) 0%, #0C0912 100%)'
+                  }}
+                ></div>
+
                   <span className="relative z-10" >Skyline Sprint</span>
                 </button>
 

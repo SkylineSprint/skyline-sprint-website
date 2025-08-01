@@ -8,9 +8,9 @@ const DevelopmentSteps = () => {
 
   // Sample images for the slider
   const sliderImages = [
-   "/SLIDER-1.jpg",
-   "/SLIDER-2.jpg",
-   "/SLIDER-3.png",
+   "/images/SLIDER-1.jpg",
+   "/images/SLIDER-2.jpg",
+   "/images/SLIDER-3.png",
   ];
 
   // Key points data
@@ -60,7 +60,18 @@ const DevelopmentSteps = () => {
   };
 
   return (
-    <div style={{ backgroundColor: '#080808' }} className="text-white min-h-screen py-16 px-4">
+   <div className="relative min-h-screen text-white py-16 px-4 overflow-hidden">
+  {/* Background image layer */}
+  <div
+    className="absolute inset-0 z-0"
+    style={{
+      backgroundImage: "url('/images/background.png')",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      opacity:0.3
+    }}
+  ></div>
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-16">

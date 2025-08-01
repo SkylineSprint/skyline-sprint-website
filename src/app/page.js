@@ -4,7 +4,8 @@ import GlassVideoHero from '../components/VideoHero';
 import TestimonialSection from '../components/Testimonials';
 import ServicesSection from '../components/Services';
 import ChooseSection from '../components/ChooseUs';
-
+import CTASection from '../components/CallToAction';
+// import Cube from '../components/Cube';
 export default function HomePage() {
   return (
     <div>
@@ -13,7 +14,8 @@ export default function HomePage() {
       <ServicesSection />
       <ChooseSection/>
       <TestimonialSection />
-    
+      <CTASection />
+     
     </div>
   );
 }

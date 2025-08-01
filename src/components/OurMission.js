@@ -1,15 +1,44 @@
 'use client'
 import React from 'react';
-
+import Image from 'next/image';
 const OurMission = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#080808' }}>
+    <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
+  {/* Background Image Layer */}
+  <div 
+    className="absolute inset-0 z-0"
+    style={{ 
+      backgroundImage: "url('/images/background.png')",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      opacity: 0.3 ,
+      zIndex: 0
+
+    }}
+  ></div>
       <div className="max-w-7xl mx-auto px-4 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Text Content - Left Side */}
           <div className="space-y-8">
+        <button 
+            className="relative px-6 py-2 text-white text-sm font-medium rounded-md transition-all duration-200 hover:scale-105 active:scale-95 mb-8 "
+            style={{
+              background: 'rgba(177, 30, 155, 0.2)',
+              boxShadow: `
+                inset 0px 10px 5px -1px rgba(255, 255, 255, 0.08),
+                0px 6px 18px -1.5px rgba(177, 30, 155, 0.18),
+                0px 1.37px 4.12px -1px rgba(177, 30, 155, 0.1),
+                0px 0.36px 1.08px -0.5px rgba(177, 30, 155, 0.08)
+              `,
+              backdropFilter: 'blur(10px)',
+              border: '1px solid rgba(177, 30, 155, 0.3)'
+            }}
+          >
+            Skyline Sprint 
+          </button>
             <div>
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">Our Mission</h2>
+              <h2 className="textxl md:text-5xl font-bold text-white mb-8">Our Mission</h2>
               <p className="text-gray-300 text-lg leading-relaxed">
                 To empower businesses and individuals through innovative technology solutions, strategic digital marketing, and world-class education that drives sustainable growth and success.
               </p>
@@ -21,7 +50,7 @@ const OurMission = () => {
             {/* Button */}
             <div>
               <button 
-                className="group relative px-8 py-4 bg-transparent text-white font-medium rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg overflow-hidden"
+                className="group relative px-8 py-4 bg-black text-white font-medium rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg overflow-hidden"
                 style={{
                   borderTop: '2px solid #B11E9B',
                   borderBottom: '2px solid #B11E9B',
@@ -61,6 +90,8 @@ const OurMission = () => {
                   src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80"
                   alt="Team collaboration and innovation"
                   className="w-full h-96 lg:h-[500px] object-cover"
+                  height={500}
+                  width={800}
                 />
               </div>
               
