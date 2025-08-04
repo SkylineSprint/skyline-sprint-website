@@ -1,9 +1,19 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { BadgeCheck } from 'lucide-react';
+import * as THREE from 'three';
+
 const HeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [scrollY, setScrollY] = useState(0);
+  const canvasRef = useRef(null);
+  const sceneRef = useRef(null);
+  const rendererRef = useRef(null);
+  const cubeRef = useRef(null);
+  const animationFrameRef = useRef(null);
+  const rotationRef = useRef({ x: 0, y: 0 });
+  const autoRotationRef = useRef({ x: 0, y: 0 });
+  const mouseRef = useRef({ x: 0, y: 0 });
+  const targetRotationRef = useRef({ x: 0, y: 0 });
 
   const slides = [
     {
@@ -11,15 +21,32 @@ const HeroSection = () => {
       description: "Skyline Sprint delivers cutting-edge software development, digital marketing excellence, and professional training to accelerate your business growth.",
       subtitle: "Helping forward-looking companies thrive with custom AI solutions and automated workflows."
     },
-    // Add more slides here if needed
   ];
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % slides.length);
   };
 
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  // Handle mouse movement for cube rotation
+  const handleMouseMove = (e) => {
+    const { innerWidth, innerHeight } = window;
+    const { clientX, clientY } = e;
+    const multiplier = 0.8; // Adjust sensitivity
+    
+    // Normalize mouse position from -0.5 to 0.5
+    const x = (clientX / innerWidth - 0.5) * multiplier;
+    const y = (clientY / innerHeight - 0.5) * multiplier;
+    
+    mouseRef.current.x = x;
+    mouseRef.current.y = -y; // Invert Y for natural movement
+  };
+
+  // Handle cube click - manual rotation
+  const handleCubeClick = () => {
+    if (rotationRef.current) {
+      rotationRef.current.x += Math.PI / 2; // 90 degree rotation
+      rotationRef.current.y += Math.PI / 2; // 90 degree rotation
+    }
   };
 
   // Auto-play functionality for slider
@@ -28,8 +55,139 @@ const HeroSection = () => {
     return () => clearInterval(timer);
   }, []);
 
+  // Mouse move event listener
+  useEffect(() => {
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  // Three.js setup
+  useEffect(() => {
+    if (!canvasRef.current) return;
+
+    // Scene setup
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ 
+      canvas: canvasRef.current, 
+      alpha: true,
+      antialias: true 
+    });
+
+    sceneRef.current = scene;
+    rendererRef.current = renderer;
+
+    // Make canvas larger and positioned
+    const updateSize = () => {
+      const canvasSize = window.innerWidth < 768 ? 224 : 288; // 56*4 or 72*4 for retina
+      
+      renderer.setSize(canvasSize, canvasSize);
+      camera.aspect = 1; // Square aspect ratio
+      camera.updateProjectionMatrix();
+    };
+
+    updateSize();
+    window.addEventListener('resize', updateSize);
+
+    // Create texture loader
+    const textureLoader = new THREE.TextureLoader();
+    
+    // Create main cube geometry
+    const geometry = new THREE.BoxGeometry(1, 1, 1);
+    
+    // Create materials with images for each face
+    const materials = [
+      new THREE.MeshBasicMaterial({ 
+        map: textureLoader.load('/images/cube-face.jpg'),
+        transparent: true 
+      }), // Right
+      new THREE.MeshBasicMaterial({ 
+        map: textureLoader.load('/images/cube-face.jpg'),
+        transparent: true 
+      }), // Left
+      new THREE.MeshBasicMaterial({ 
+        map: textureLoader.load('/images/cube-face.jpg'),
+        transparent: true 
+      }), // Top
+      new THREE.MeshBasicMaterial({ 
+        map: textureLoader.load('/images/cube-face.jpg'),
+        transparent: true 
+      }), // Bottom
+      new THREE.MeshBasicMaterial({ 
+        map: textureLoader.load('/images/cube-face.jpg'),
+        transparent: true 
+      }), // Front
+      new THREE.MeshBasicMaterial({ 
+        map: textureLoader.load('/images/cube-face.jpg'),
+        transparent: true 
+      }), // Back
+    ];
+
+    // Fallback to colors if images don't load
+    const fallbackColors = ['#B11E9B', '#7D146D', '#9D4EDD', '#C77DFF', '#E0AAFF', '#B11E9B'];
+    materials.forEach((material, index) => {
+      material.map.onError = () => {
+        material.map = null;
+        material.color.setHex(fallbackColors[index]);
+      };
+    });
+
+    const cube = new THREE.Mesh(geometry, materials);
+    cubeRef.current = cube;
+    scene.add(cube);
+
+    camera.position.z = 3;
+
+    // Animation loop with smooth mouse tracking
+    const animate = () => {
+      animationFrameRef.current = requestAnimationFrame(animate);
+
+      if (cubeRef.current && rotationRef.current && autoRotationRef.current) {
+        // Update auto-rotation (continuous slow rotation)
+        autoRotationRef.current.x += 0.005; // Slow rotation speed on X axis
+        autoRotationRef.current.y += 0.01;  // Slightly faster rotation on Y axis
+
+        // Calculate target rotation combining all sources
+        targetRotationRef.current.x = autoRotationRef.current.x + rotationRef.current.x + mouseRef.current.y * Math.PI * 0.3;
+        targetRotationRef.current.y = autoRotationRef.current.y + rotationRef.current.y + mouseRef.current.x * Math.PI * 0.3;
+
+        // Larger cube size
+        cubeRef.current.scale.set(2, 2, 2);
+        cubeRef.current.position.set(0, 0, 0);
+        
+        // Smooth rotation to target angles with damping
+        const dampingFactor = 0.08; // Lower = smoother but slower
+        cubeRef.current.rotation.x += (targetRotationRef.current.x - cubeRef.current.rotation.x) * dampingFactor;
+        cubeRef.current.rotation.y += (targetRotationRef.current.y - cubeRef.current.rotation.y) * dampingFactor;
+        
+        materials.forEach(material => {
+          material.opacity = 1;
+        });
+      }
+
+      renderer.render(scene, camera);
+    };
+
+    animate();
+
+    return () => {
+      window.removeEventListener('resize', updateSize);
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+      if (rendererRef.current) {
+        rendererRef.current.dispose();
+      }
+      geometry.dispose();
+      materials.forEach(material => {
+        if (material.map) material.map.dispose();
+        material.dispose();
+      });
+    };
+  }, []);
+
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-black">
+    <div className="relative w-full min-h-screen overflow-hidden bg-black">
       {/* Background Image */}
       <div 
         className="absolute inset-0"
@@ -38,37 +196,47 @@ const HeroSection = () => {
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-      
         }}
       ></div>
 
+      {/* 3D Canvas - */}
+      <div 
+        className="absolute bottom-20 left-1/2   transform -translate-x-1/2 z-30 cursor-pointer mt-8 md:mt-12 lg:mt-16"
+        onClick={handleCubeClick}
+        title="Click to add manual rotation! Move your mouse to control the cube."
+      >
+        <canvas 
+          ref={canvasRef}
+          className="w-56 h-56 md:w-72 md:h-72"
+        />
+      </div>
+
       {/* Main Content Container */}
-      <div className="relative z-10 h-full flex items-center justify-center">
+      <div className="relative z-40 h-full flex items-center justify-center">
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-6 md:space-y-8 lg:space-y-10">
             
             {/* Top Button */}
             <div className="flex justify-center mb-4 md:mb-6">
-             
-        <button 
-            className="relative px-3 py-2  text-white text-lg font-medium rounded-md transition-all duration-200 hover:scale-105 active:scale-95 mb-8 flex items-center gap-3 "
-            style={{
-              background: 'rgba(177, 30, 155, 0.2)',
-              boxShadow: `
-                inset 0px 10px 5px -1px rgba(255, 255, 255, 0.08),
-                0px 6px 18px -1.5px rgba(177, 30, 155, 0.18),
-                0px 1.37px 4.12px -1px rgba(177, 30, 155, 0.1),
-                0px 0.36px 1.08px -0.5px rgba(177, 30, 155, 0.08)
-              `,
-              backdropFilter: 'blur(10px)',
-              border: '1px solid rgba(177, 30, 155, 0.3)'
-            }}
-          >
-          <div style={{ backgroundColor: '#B11E9B', borderRadius: '4px', padding: '4px', display: 'flex', alignItems: 'start', justifyContent: 'start' }}>
-            <BadgeCheck size={16} color="white" />
-          </div>
-          Skyline Tranomation 
-        </button>
+              <button 
+                className="relative px-3 py-2 text-white text-lg font-medium rounded-md transition-all duration-200 hover:scale-105 active:scale-95 mb-8 flex items-center gap-3"
+                style={{
+                  background: 'rgba(177, 30, 155, 0.2)',
+                  boxShadow: `
+                    inset 0px 10px 5px -1px rgba(255, 255, 255, 0.08),
+                    0px 6px 18px -1.5px rgba(177, 30, 155, 0.18),
+                    0px 1.37px 4.12px -1px rgba(177, 30, 155, 0.1),
+                    0px 0.36px 1.08px -0.5px rgba(177, 30, 155, 0.08)
+                  `,
+                  backdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(177, 30, 155, 0.3)'
+                }}
+              >
+                <div style={{ backgroundColor: '#B11E9B', borderRadius: '4px', padding: '4px', display: 'flex', alignItems: 'start', justifyContent: 'start' }}>
+                  <BadgeCheck size={16} color="white" />
+                </div>
+                Skyline Tranomation 
+              </button>
             </div>
 
             {/* Main Title */}
@@ -90,9 +258,9 @@ const HeroSection = () => {
             </div>
             
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 lg:gap-6 justify-center items-center px-4 sm:px-6 md:px-8 pt-4 md:pt-6">
+            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 lg:gap-6 justify-center items-center px-4 sm:px-6 md:px-8 pt-4 md:pt-6 mb-16 md:mb-24">
               
-             {/* Primary Button */}
+              {/* Primary Button */}
               <button 
                 className="
                   w-full sm:w-auto 
@@ -115,31 +283,30 @@ const HeroSection = () => {
                 Get Started
               </button>
 
-{/* Secondary Button */}
-<button 
-  className="
-    w-full sm:w-auto 
-    bg-black 
-    border border-gray-600 hover:border-[#1E061B] 
-    text-gray-300 hover:text-purple-400
-    text-sm md:text-base lg:text-lg 
-    rounded-lg 
-    transition-all duration-200 hover:scale-105
-    min-w-[160px] md:min-w-[180px]
-    px-6 md:px-8 lg:px-10
-    h-[44px] md:h-[60px] lg:h-[50px]
-  "
->
-  View Our Work
-</button>
-
+              {/* Secondary Button */}
+              <button 
+                className="
+                  w-full sm:w-auto 
+                  bg-black 
+                  border border-gray-600 hover:border-[#1E061B] 
+                  text-gray-300 hover:text-purple-400
+                  text-sm md:text-base lg:text-lg 
+                  rounded-lg 
+                  transition-all duration-200 hover:scale-105
+                  min-w-[160px] md:min-w-[180px]
+                  px-6 md:px-8 lg:px-10
+                  h-[44px] md:h-[60px] lg:h-[50px]
+                "
+              >
+                View Our Work
+              </button>
             </div>
           </div>
         </div>
       </div>
 
       {/* Mouse Icon - Bottom Center */}
-      <div className="absolute bottom-6 md:bottom-8 lg:bottom-12 left-1/2 -translate-x-1/2 z-20">
+      <div className="absolute bottom-6 md:bottom-8 lg:bottom-12 left-1/2 -translate-x-1/2 z-50">
         <svg 
           width="24" 
           height="34"
@@ -153,7 +320,7 @@ const HeroSection = () => {
       </div>
 
       {/* Horizontal Arrow + Line - Bottom Right */}
-      <div className="absolute bottom-6 md:bottom-8 lg:bottom-12 right-4 md:right-6 lg:right-8 z-20">
+      <div className="absolute bottom-6 md:bottom-8 lg:bottom-12 right-4 md:right-6 lg:right-8 z-50">
         <svg 
           width="45" 
           height="17" 
