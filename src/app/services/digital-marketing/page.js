@@ -1,11 +1,11 @@
-import PioneeringExcellenceSection from '../../../components/Inception'
-import DigitalMarketingServices from '../../../components/DigitalMarketingServices'
-import TestimonialSection from '../../../components/Testimonials'
-import BrandPhilosophyCard from '../../../components/BrandPhilosophyCard'
+import ServicesHero from '../../../components/Global/ServicesHero'
+import DigitalMarketingServices from '../../../components/Services/DigitalMarketingServices'
+import TestimonialSection from '../../../components/Global/Testimonials'
+import BrandPhilosophyCard from '../../../components/Services/BrandPhilosophyCard'
 export default function OurServices() {
   return (
     <div>
-<PioneeringExcellenceSection
+<ServicesHero
   heading={
     <>
      Digital Marketing That <br />

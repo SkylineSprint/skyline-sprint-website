@@ -1,12 +1,12 @@
-import PioneeringExcellenceSection from '../../../components/Inception'
-import DevelopmentSteps from '../../../components/DevelopmentSteps'
-import CsdService from '../../../components/CsdServices'
-import TestimonialSection from '../../../components/Testimonials'
+import ServicesHero from '../../../components/Global/ServicesHero'
+import DevelopmentSteps from '../../../components/Services/DevelopmentSteps'
+import CsdService from '../../../components/Services/CsdServices'
+import TestimonialSection from '../../../components/Global/Testimonials'
 
 export default function OurServices() {
   return (
     <div>
-<PioneeringExcellenceSection
+<ServicesHero
   heading={
     <>
       Custom Software Development <br />
