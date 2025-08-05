@@ -1,13 +1,13 @@
-import PioneeringExcellenceSection from '../../../components/Inception'
-import TestimonialSection from '../../../components/Testimonials'
-import SoftwareTrainingPage from '../../../components/SoftwareDevTraining'
-import BrandPhilosophyCard from '../../../components/BrandPhilosophyCard'
-import StackCards from '../../../components/StackCards'
-// import ScrollSyncLayout from '../../../components/ScrollSyncLayout'
+import ServicesHero from '../../../components/Global/ServicesHero'
+import TestimonialSection from '../../../components/Global/Testimonials'
+import SoftwareTrainingPage from '../../../components/Services/SoftwareDevTraining'
+import BrandPhilosophyCard from '../../../components/Services/BrandPhilosophyCard'
+import StackCards from '../../../components/Portfolio/StackCards'
+import ScrollSyncLayout from '../../../components/ScrollSyncLayout'
 export default function OurServices() {
   return (
     <div>
-<PioneeringExcellenceSection
+<ServicesHero
   heading={
     <>
     Master Tomorrow&apos;s<br />
@@ -23,10 +23,7 @@ export default function OurServices() {
     paragraph={
     <>
     We believe in learning by doing. Our curriculum is constantly updated to reflect current industry practices, and our instructors bring real-world experience to every lesson.
-
-      <br />
-      <br />
-          
+      <br /><br />    
     Whether you are starting your tech career or looking to expand your skillset, our programs provide the knowledge and confidence you need to succeed.
     </>
   }
@@ -145,6 +142,6 @@ export default function OurServices() {
 />
 <TestimonialSection />  
 <StackCards/>
-
+{/* <ScrollSyncLayout/> */}
 </div>
   )}
